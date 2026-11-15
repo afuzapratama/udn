@@ -61,3 +61,18 @@ Design Read: navigasi profil perusahaan pendidikan yang lebih luwes, dengan pane
 ## SEO dasar
 
 Pada 16 November 2026, judul/deskripsi dipertegas menjadi e-learning dan manajemen sekolah tanpa mengubah copy isi atau layout. Canonical, sitemap, dan identitas WebSite memakai https://udn.co.id/. Open Graph/Twitter memakai screenshot Kelas Merdeka yang sudah diminta pemilik, dengan alt yang menjelaskan bahwa gambar adalah contoh produk. Organization menggunakan nama, alamat, email, dan telepon yang sudah ditampilkan. Tidak menambahkan rating, testimoni, harga, atau klaim peringkat. Bahasa tetap satu URL; tidak membuat hreflang fiktif. JSON-LD dan metadata Indonesia tersedia pada HTML mentah; metadata browser mengikuti pilihan bahasa.
+
+## Halaman error
+
+Design Read: halaman pemulihan untuk pengunjung yang membuka URL tidak valid atau mengalami gangguan layanan, dengan identitas UDN yang tenang dan instruksi langsung. ENERGY 1 / RHYTHM 2 / MOTION 1.
+
+- Empat status yang diminta/disepakati: 404, 500, 503, dan 505. Copy menjelaskan kondisi masing-masing tanpa mengklaim penyebab pasti, perbaikan sedang berlangsung, atau waktu pemulihan.
+- Kode status besar menjadi penanda konteks; headline menjelaskan keadaan; tombol beranda menjadi tindakan utama, email menjadi jalur bantuan. Pada 5xx, reload adalah tindakan tambahan yang dipicu pengguna, bukan loop otomatis.
+- Warna navy/putih/biru, font sistem, dan logo lama mempertahankan hubungan dengan halaman utama. Tidak ada ilustrasi atau aset identitas baru.
+- Komposisi satu kolom berubah menjadi dua kolom pada 700px agar kode dan instruksi dapat dibaca bersebelahan. White space memisahkan konteks error dari langkah pemulihan.
+- Radius 9px menandai tombol dan 4px menandai blok bantuan; kontrol bahasa memakai gaya kelompok yang sudah ada. Latar netral membedakan kontak tanpa efek glow/shadow.
+- Logo, CSS, JavaScript, dan favicon tertanam pada output HTML. Halaman error tidak bergantung pada aset eksternal atau script homepage yang bisa ikut gagal.
+- Halaman ID/EN memakai preferensi browser dan kunci pilihan yang sama dengan homepage. Tanpa JavaScript, copy Indonesia, beranda, dan email tetap dapat digunakan; tombol nonaktif disembunyikan.
+- Sumber UI berada pada errors/styles.css, errors/script.js, dan template scripts/error-pages.mjs; build melakukan rendering HTML statis, bukan mengubah source UI melalui skrip pengganti string.
+- Halaman berstatus noindex dan tidak dimasukkan sitemap. Tidak membuat rewrite semua URL ke homepage.
+- Halaman 404 mengikuti kontrak output Vercel. Pemakaian halaman 5xx sebagai error platform bergantung pada fitur Enterprise Vercel; tidak mengklaim tersedia otomatis di paket lain.

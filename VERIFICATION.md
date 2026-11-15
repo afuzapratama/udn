@@ -183,3 +183,34 @@ Batas: build dan HTTP lokal terverifikasi; belum menjalankan build/deploy pada a
 Batas: tidak menjalankan Google Rich Results Test, inspeksi Googlebot pada URL live, atau verifikasi Search Console; validasi JSON dan XML lokal tidak membuktikan indexing/rich result. Bahasa masih satu URL sehingga tidak mengklaim pengindeksan ID/EN terpisah. Deployment dan pengambilan ulang oleh mesin pencari memerlukan proses di layanan masing-masing.
 
 Rujukan: https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites dan https://developers.google.com/search/docs/appearance/structured-data/organization serta https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap.
+
+# Halaman error, 16 November 2026
+
+## Bukti implementasi dan pengujian
+
+- PASS: npm run build menghasilkan 404.html, 500.html, 503.html, 505.html; node --check errors/script.js dan git diff --check berhasil.
+- PASS: server uji lokal menyajikan URL tidak dikenal /missing/nested/page dengan body 404.html dan HTTP 404. Fixture lokal /_test/500, /_test/503, /_test/505 menyajikan HTML masing-masing dengan status 500/503/505. Fixture adalah alat verifikasi lokal di /tmp, tidak dimasukkan source/deployment.
+- PASS: keempat status diperiksa dalam ID dan EN, masing-masing pada lebar 320, 375, 768, dan 1440px; tidak ada horizontal overflow atau pageerror.
+- PASS: screenshot 404 mobile/desktop diperiksa secara visual, mengikuti navy/putih dan identitas UDN.
+- PASS: setiap halaman memiliki satu H1, lang, title, main/header/footer, meta robots noindex follow, logo SVG inline dan favicon data URI.
+- PASS: tidak ada request aset lain setelah document untuk halaman 503; template semua halaman memakai CSS/JS/logo inline yang sama.
+- PASS: browser fr-FR memilih EN; simulasi localStorage diblokir tetap mengizinkan pergantian bahasa. Tombol ID/EN berfungsi melalui Enter/Space; resize teks 200% pada 320px tanpa overflow.
+- PASS: tanpa JavaScript, 500 menampilkan konten Indonesia dan menyembunyikan kontrol bahasa/reload; tautan beranda dan email tetap tersedia.
+
+## Klik setiap kontrol pada 404/500/503/505
+
+- PASS: skip link mengarahkan ke #utama pada keempat halaman.
+- PASS: logo membuka / dari setiap halaman, termasuk URL bertingkat yang tidak ditemukan.
+- PASS: Kembali ke beranda / Back to homepage membuka / pada setiap halaman.
+- PASS: ID dan EN mengganti seluruh copy, title, html lang, aria label, subjek email, serta aria-pressed pada setiap halaman.
+- PASS: email meminta mailto:help@udn.co.id dengan kode status pada subjek; protokol ditangkap saat klik tanpa mengirim email.
+- PASS: reload pada 500/503/505 memuat ulang URL yang sedang dibuka, dengan status uji tetap sama. Tidak ada reload otomatis atau tombol reload pada 404.
+
+## Delivery Gate
+
+- Hard Gate PASS: R-02 tidak ada em dash pada source copy baru. R-03 dibuktikan viewport/zoom; R-17/R-18/R-36/R-38 tanpa statistik/testimoni/klaim pemulihan fiktif. R-23 logo lama dan halaman yang diminta; R-24/R-26/R-35 kontrol diklik dan dicatat. R-25 pasangan warna sama dengan UI utama: ink/putih 14.23:1, muted/putih 6.24:1, muted/paper 5.76:1, biru/paper 6.68:1, putih/navy 13.96:1; border kontrol/paper 3.42:1. R-27 tidak ada fetch data, form, atau state async; halaman mewakili kondisi error yang nyata/simulasi. R-28 tanpa FAQ. R-32/R-39 kontrol native minimum 44px, outline terlihat, nama aksesibel mencakup label ID/EN, keyboard diuji, tidak ada animasi. R-33 template dirender ke output build tanpa memodifikasi source homepage. R-34 satu tema; R-37 Design Read sebelum implementasi; R-40 logo SVG berdimensi dan tidak ada resource blocking pihak ketiga.
+- Purpose-Gate PASS: R-01/R-04/R-06..R-10/R-12..R-14/R-19/R-22 diperiksa. Tidak ada gradient, glow, glass, ikon dekoratif, grid latar, shadow, atau animasi. Angka besar menunjukkan status HTTP; font sistem untuk keterbacaan; latar bantuan memisahkan kontak. Semua alasan pada DESIGN.md.
+- Liveliness PASS: ENERGY 1 / RHYTHM 2 / MOTION 1 eksplisit, kode/headline memberi fokus, whitespace memisahkan konteks dan pemulihan, biru menunjukkan label/tautan, motif editorial angka menghubungkan ke UDN. Screenshot mobile/desktop konsisten dengan arah tersebut.
+- Craftsmanship & Quality Locks PASS: C-1..C-5 dan R-05/R-11/R-15/R-16/R-20/R-21/R-29..R-31 diperiksa. Setiap bagian memiliki tujuan pemulihan, dua bahasa teruji, radius mengikuti fungsi, palette/wordmark UDN dipertahankan, copy langsung tanpa klaim palsu. Tidak ada template pemasaran, badge, atau kartu fitur generik.
+
+Batas: status error disimulasikan dengan server lokal untuk menguji HTML di bawah respons 404/5xx; ini bukan verifikasi routing produksi Vercel. Vercel memakai 404.html untuk URL tidak ditemukan menurut https://vercel.com/kb/guide/custom-404-page. Custom platform error 5xx tersedia pada Enterprise menurut https://vercel.com/docs/custom-error-pages. File statis dapat dibuka sebagai preview HTTP 200 pada hosting; keberadaan file tidak mengubah status request atau mengaktifkan fitur Enterprise. Tidak menggantikan error browser/jaringan/DNS. Belum menginduksi error platform live atau mengubah paket Vercel.

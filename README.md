@@ -34,7 +34,7 @@ npm run build
 python3 -m http.server 8000 --bind 127.0.0.1 --directory dist
 ```
 
-Build menghasilkan `dist/` berisi hanya `index.html`, `styles.css`, `script.js`, dan `assets/`. Folder ini dibuat ulang setiap build. Favicon merujuk `/assets/udn.svg`.
+Build menghasilkan `dist/` berisi halaman utama, CSS/JS, aset publik, robots.txt, sitemap.xml, serta halaman error 404/500/503/505. Folder ini dibuat ulang setiap build. Favicon merujuk `/assets/udn.svg`.
 
 Untuk deploy melalui Git:
 
@@ -61,3 +61,15 @@ Canonical produksi: `https://udn.co.id/`. Judul dan deskripsi menjelaskan e-lear
 Data terstruktur Organization dan WebSite berisi identitas perusahaan yang sudah tampil di halaman. `robots.txt` dan `sitemap.xml` ikut disalin ke `dist/` saat build. Setelah deployment selesai, tambahkan `https://udn.co.id/sitemap.xml` di Google Search Console dan periksa homepage melalui URL Inspection. Verifikasi kepemilikan Search Console belum dilakukan dari proyek ini.
 
 Versi ID/EN saat ini berbagi satu URL dengan pergantian bahasa di browser. Tidak memasang hreflang untuk URL bahasa yang belum ada. Untuk pengindeksan bahasa secara terpisah, perubahan berikutnya memerlukan URL khusus dan HTML terjemahan yang dapat diambil langsung. Metadata ini tidak menjamin peringkat atau pengindeksan tertentu.
+
+## Halaman error
+
+Build membuat `404.html`, `500.html`, `503.html`, dan `505.html` dari `scripts/error-pages.mjs` serta source `errors/`. CSS, script pergantian bahasa, logo SVG, dan favicon ditanam dalam setiap HTML. Halaman error tidak memerlukan stylesheet, script, atau gambar eksternal. Bahasa mengikuti preferensi browser dan pilihan `udn-language` yang sama dengan homepage; tanpa JavaScript tetap tersedia dalam bahasa Indonesia dengan tautan beranda dan email. Tombol muat ulang hanya tersedia jika JavaScript aktif.
+
+Vercel mengenali `404.html` dalam output statis dan menyajikannya untuk URL yang tidak ditemukan. Tidak ada catch-all rewrite ke homepage yang mengubah error menjadi HTTP 200. Halaman error memakai `noindex, follow` dan tidak masuk sitemap.
+
+Integrasi halaman gangguan **platform Vercel** dengan `500.html` sebagai fallback, serta `503.html`/`505.html` per status, memerlukan dukungan paket **Enterprise** menurut dokumentasi Vercel saat implementasi. Pada paket lain, file tetap tersedia sebagai halaman statis, tetapi error platform dapat tetap memakai tampilan bawaan Vercel. Menambahkan file ini tidak mengubah pengaturan paket akun dan tidak menggantikan layar error browser atau gangguan DNS/jaringan. `505` berarti versi HTTP tidak didukung, berbeda dari error server umum `500`.
+
+Untuk melihat desain hasil build, buka `/404.html`, `/500.html`, `/503.html`, atau `/505.html`. Akses langsung file preview biasanya berstatus HTTP 200; status 404/5xx sebenarnya berasal dari penanganan request oleh hosting. Server Python standar tidak otomatis memakai 404.html; uji URL tidak ditemukan pada deployment Vercel untuk memverifikasi integrasinya.
+
+Referensi: [Vercel custom 404](https://vercel.com/kb/guide/custom-404-page) dan [platform error pages](https://vercel.com/docs/custom-error-pages).
