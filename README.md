@@ -53,3 +53,11 @@ npx vercel --prod
 Perintah pertama mengikuti proses login/link proyek dan membuat deployment preview. Perintah kedua memublikasikan production. Tidak memerlukan environment variable untuk halaman saat ini. Project ID, token, dan domain tidak dibuat otomatis oleh konfigurasi lokal ini.
 
 Referensi: [Vercel build settings](https://vercel.com/docs/builds/configure-a-build) dan [vercel.json](https://vercel.com/docs/project-configuration/vercel-json).
+
+## SEO
+
+Canonical produksi: `https://udn.co.id/`. Judul dan deskripsi menjelaskan e-learning serta manajemen sekolah. Metadata Open Graph/Twitter memakai screenshot produk yang sudah ada; title, description, dan alt menyesuaikan bahasa ketika JavaScript berjalan. Crawler pratinjau tanpa JavaScript menerima metadata Indonesia dari HTML.
+
+Data terstruktur Organization dan WebSite berisi identitas perusahaan yang sudah tampil di halaman. `robots.txt` dan `sitemap.xml` ikut disalin ke `dist/` saat build. Setelah deployment selesai, tambahkan `https://udn.co.id/sitemap.xml` di Google Search Console dan periksa homepage melalui URL Inspection. Verifikasi kepemilikan Search Console belum dilakukan dari proyek ini.
+
+Versi ID/EN saat ini berbagi satu URL dengan pergantian bahasa di browser. Tidak memasang hreflang untuk URL bahasa yang belum ada. Untuk pengindeksan bahasa secara terpisah, perubahan berikutnya memerlukan URL khusus dan HTML terjemahan yang dapat diambil langsung. Metadata ini tidak menjamin peringkat atau pengindeksan tertentu.

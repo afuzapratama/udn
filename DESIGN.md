@@ -57,3 +57,7 @@ Design Read: navigasi profil perusahaan pendidikan yang lebih luwes, dengan pane
 - Offset anchor diukur dari tinggi header dengan ResizeObserver agar bagian tujuan tidak tertutup pada pergantian ukuran atau bahasa.
 - Escape dan sentuhan luar mengembalikan fokus ke tombol; pemilihan tautan mobile memindahkan fokus ke bagian tujuan. Urutan DOM mengikuti urutan kontrol desktop/mobile.
 - Transisi 150–180ms hanya pada warna kontrol dan ikon Menu; prefers-reduced-motion menghapusnya. Tidak ada animasi scroll/reveal baru.
+
+## SEO dasar
+
+Pada 16 November 2026, judul/deskripsi dipertegas menjadi e-learning dan manajemen sekolah tanpa mengubah copy isi atau layout. Canonical, sitemap, dan identitas WebSite memakai https://udn.co.id/. Open Graph/Twitter memakai screenshot Kelas Merdeka yang sudah diminta pemilik, dengan alt yang menjelaskan bahwa gambar adalah contoh produk. Organization menggunakan nama, alamat, email, dan telepon yang sudah ditampilkan. Tidak menambahkan rating, testimoni, harga, atau klaim peringkat. Bahasa tetap satu URL; tidak membuat hreflang fiktif. JSON-LD dan metadata Indonesia tersedia pada HTML mentah; metadata browser mengikuti pilihan bahasa.

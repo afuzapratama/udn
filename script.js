@@ -93,8 +93,8 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 const translations = [
-  ['title', 'PT Universal Digital Network | Technology for Education'],
-  ['meta[name="description"]', 'PT Universal Digital Network develops e-learning and school management ecosystems. Discover Kelas Merdeka, product licensing, and systems tailored to your educational needs.', 'content'],
+  ['title', 'UDN | E-learning &amp; School Management'],
+  ['meta[name="description"]', 'PT Universal Digital Network develops e-learning and school management ecosystems. Meet Kelas Merdeka and discuss product licensing and system customization.', 'content'],
   ['.skip-link', 'Skip to content'],
   ['.wordmark', 'UDN, back to top', 'aria-label'],
   ['.navigation', 'Main navigation', 'aria-label'],
@@ -197,6 +197,17 @@ function setLanguage(language) {
   languageButtons.forEach((button) => {
     button.setAttribute('aria-pressed', String(button.dataset.language === language));
   });
+  const description = document.querySelector('meta[name="description"]').content;
+  const imageDescription = language === 'id'
+    ? 'Kelas Merdeka, contoh produk pendidikan dalam ekosistem UDN.'
+    : 'Kelas Merdeka, an education product in the UDN ecosystem.';
+  document.querySelector('meta[property="og:title"]').content = document.title;
+  document.querySelector('meta[property="og:description"]').content = description;
+  document.querySelector('meta[property="og:locale"]').content = language === 'id' ? 'id_ID' : 'en_US';
+  document.querySelector('meta[property="og:image:alt"]').content = imageDescription;
+  document.querySelector('meta[name="twitter:title"]').content = document.title;
+  document.querySelector('meta[name="twitter:description"]').content = description;
+  document.querySelector('meta[name="twitter:image:alt"]').content = imageDescription;
   updateMenuLabel();
   requestAnimationFrame(updateCurrentSection);
 }

@@ -165,3 +165,21 @@ Lingkup: header, menu mobile/desktop, pengelompokan bahasa, penanda bagian aktif
 - Craftsmanship & Quality Locks PASS: C-1..C-5/R-05/R-11/R-15/R-16/R-20/R-21/R-29..R-31 tetap sesuai laporan sebelumnya; build hanya membungkus sumber yang sama sebagai output statis.
 
 Batas: build dan HTTP lokal terverifikasi; belum menjalankan build/deploy pada akun Vercel atau memasang domain/DNS. Tidak ada token atau project ID Vercel ditambahkan. Dokumentasi deployment tersedia di README.md.
+
+# SEO dasar, 16 November 2026
+
+- PASS: npm run build dan node --check script.js; git diff --check tanpa masalah.
+- PASS: HTML hasil build memiliki tepat satu canonical https://udn.co.id/ dan satu H1. JSON-LD dapat di-parse, memuat Organization dan WebSite dengan referensi @id konsisten.
+- PASS: sitemap.xml dapat di-parse sebagai XML dan memuat satu URL canonical yang sama; robots.txt memuat URL sitemap. Kedua berkas ikut disalin ke dist.
+- PASS: Chromium memeriksa ID -> EN -> ID; document.title sama dengan og:title dan twitter:title pada setiap pergantian. Deskripsi, locale, dan alt gambar pratinjau ikut diperbarui melalui setLanguage.
+- PASS: canonical dan og:url tetap https://udn.co.id/ untuk kedua bahasa; tidak menerbitkan hreflang yang menunjuk ke URL bahasa yang belum ada.
+- PASS: robots.txt HTTP 200 text/plain, sitemap.xml HTTP 200 text/xml, gambar pratinjau HTTP 200 image/jpeg dari server dist.
+- PASS: menu mobile dan navigasi ke #produk tetap berfungsi; tidak ada pageerror. Tanpa JavaScript, judul Indonesia, satu H1, dan JSON-LD tersedia di HTML.
+- Hard Gate PASS: R-02/R-17/R-18/R-36/R-38 tidak menambah klaim atau fakta bisnis; schema mengulang informasi yang terlihat. R-23 memakai screenshot lama yang disetujui. R-24/R-26/R-35 navigasi diperiksa dari hasil build. R-03/R-25/R-27/R-28/R-32/R-34/R-39 layout dan kontrol tetap mengikuti laporan sebelumnya; delta hanya head, metadata bahasa, dan berkas crawler. R-33 edit langsung pada source. R-37 arah visual tetap. R-40 tidak menambah media atau skrip pihak ketiga; JSON-LD adalah data non-eksekusi, script UI tetap defer.
+- Purpose-Gate PASS: tidak menambah teknik visual; R-01/R-04/R-06..R-10/R-12..R-14/R-19/R-22 tetap sesuai laporan navigasi. Gambar pratinjau mengidentifikasi contoh produk asli, bukan aset baru.
+- Liveliness PASS: ENERGY 1 / RHYTHM 2 / MOTION 1, komposisi, motif, dan aksen tetap; metadata memperjelas bidang layanan yang sudah ada.
+- Craftsmanship & Quality Locks PASS: C-1..C-5/R-05/R-11/R-15/R-16/R-20/R-21/R-29..R-31 tetap sesuai laporan sebelumnya; judul/deskripsi spesifik, tanpa keyword stuffing atau klaim hasil SEO.
+
+Batas: tidak menjalankan Google Rich Results Test, inspeksi Googlebot pada URL live, atau verifikasi Search Console; validasi JSON dan XML lokal tidak membuktikan indexing/rich result. Bahasa masih satu URL sehingga tidak mengklaim pengindeksan ID/EN terpisah. Deployment dan pengambilan ulang oleh mesin pencari memerlukan proses di layanan masing-masing.
+
+Rujukan: https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites dan https://developers.google.com/search/docs/appearance/structured-data/organization serta https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap.
